@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'thor'
+require 'analyze.rb'
 
 class Txt2csv < Thor
   class_option :i, :banner => "<input file>",
@@ -12,8 +13,10 @@ class Txt2csv < Thor
   options name_prefix, :aliases => :p
   options name_suffix, :aliases => :s
   def analyze
-    puts "option i works!" if options[:i]
-    puts "option o works!" if options[:o]
+   input = options[:i]
+   output = options[:o]
+   fix = '-p'
+   Analyze.new(input, output, fix)
   end
 
   desc "convert [file]", "convert a [file]"
