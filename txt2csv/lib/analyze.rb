@@ -1,9 +1,12 @@
 #!/usr/bin/env ruby
+require 'csv'
+
 class Analyze
   def initialize(input_file_name, output_file_name, fix)
     @input_file = File.new(input_file_name, 'r')
     @output_file = File.new(output_file_name, 'w')
     @fix = fix
+    analyze
   end
 
   def analyze
@@ -17,7 +20,7 @@ class Analyze
     end
   
     histogram = Hash[ histogram.sort_by { |word, count| count }.reverse]
-    histogram.each { |word, count| @output_file.write("#{word} #{count}") }    
+    histogram.each { |word, count| @output_file.write("#{word} #{count}\n") }    
   end 
   
   def pick_pattern

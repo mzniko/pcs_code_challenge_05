@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'thor'
-require 'analyze.rb'
+require_relative 'analyze.rb'
 
 class Txt2csv < Thor
   class_option :i, :banner => "<input file>",
@@ -10,8 +10,8 @@ class Txt2csv < Thor
                    :required => true
 
   desc "analyze [file]", "analyze a [file]"
-  options name_prefix, :aliases => :p
-  options name_suffix, :aliases => :s
+  # options :name_prefix, :aliases => :p
+  # options :name_suffix, :aliases => :s
   def analyze
    input = options[:i]
    output = options[:o]
@@ -20,8 +20,8 @@ class Txt2csv < Thor
   end
 
   desc "convert [file]", "convert a [file]"
-  options name_prefix, :aliases => :p
-  options name_suffix, :aliases => :s
+  # options :name_prefix, :aliases => :p
+  # options :name_suffix, :aliases => :s
   def convert
     puts "option i works!" if options[:i]
   end
