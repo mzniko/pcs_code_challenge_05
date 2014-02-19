@@ -1,22 +1,30 @@
-case ARGV[0]
-when '-p'
-  regular_expression = /^\S*/
-when '-s'
-  regular_expression = /\S*$/
-else
-  puts 'unknown option'
-  puts 'usage: analyze.rb -p | -s < input_file > output_file'
-  exit
-end
+#
+class Analyze
+  def initialize(input_file_name, output_file_name, fix)
+    @input_file = File.new(input_file_name, 'r')
+    @output_file = File.new(output_file_name, 'w')
+    @fix = fix
+  end
 
-ARGV.clear
+  def determine_fix
+    case @fix
 
-histogram = Hash.new(0)
+    when '-p'
 
-while line = gets
-  word = regular_expression.match(line).to_s
-  histogram[word.to_sym] += 1
-end
 
-histogram = Hash[ histogram.sort_by { |words, count| count }.reverse]
-histogram.each { |words, count| puts "#{words} #{count}" }
+    when '-s'  
+
+      
+    end
+
+  def split_file
+    separate = @input_file.each_line { |line| CSV.parse_line(line, :col_sep => '\t' ) }
+  end  
+
+  def 
+
+    
+  end
+
+
+  end 
