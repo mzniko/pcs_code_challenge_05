@@ -4,12 +4,12 @@ require 'thor'
 require_relative 'analyze.rb'
 
 class Txt2csv < Thor
-  class_option :i, :banner => "<input file>",
-                   :required => true
-  class_option :o, :banner => "<output file>",
-                   :required => true
+  class_option :i, :banner => " Input file: this must be specified"
+                   #:required => true
+  class_option :o, :banner => " Output file: this must be specified"
+                   #:required => true
 
-  desc "analyze [file]", "analyze a [file]"
+  desc "analyze {-p | -s} -i File -o File", "analyze a file"
   # options :name_prefix, :aliases => :p
   # options :name_suffix, :aliases => :s
   def analyze
@@ -19,7 +19,7 @@ class Txt2csv < Thor
    Analyze.new(input, output, fix)
   end
 
-  desc "convert [file]", "convert a [file]"
+  desc "convert -p File -s File -i File -o File", "convert a file"
   # options :name_prefix, :aliases => :p
   # options :name_suffix, :aliases => :s
   def convert
