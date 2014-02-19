@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+
+require 'thor'
+
+class Txt2csv < Thor
+  class_option :i, :banner => "<input file>",
+                   :required => true
+  class_option :o, :banner => "<output file>",
+                   :required => true
+
+  desc "analyze [file]", "analyze a [file]"
+  options name_prefix, :aliases => :p
+  options name_suffix, :aliases => :s
+  def analyze
+    puts "option i works!" if options[:i]
+    puts "option o works!" if options[:o]
+  end
+
+  desc "convert [file]", "convert a [file]"
+  options name_prefix, :aliases => :p
+  options name_suffix, :aliases => :s
+  def convert
+    puts "option i works!" if options[:i]
+  end
+
+end
+
+Txt2csv.start
