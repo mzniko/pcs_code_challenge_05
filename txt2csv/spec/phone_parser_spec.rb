@@ -9,9 +9,9 @@ describe Parse do
     expect(return_array).to eq(['', '222', '333', '4444', ''])
   end
 
-  it 'should parse country code, prefixes, lines and extensions' do
-    return_array = Parse.parse_phone('1-333-4444 x1234')
-    expect(return_array).to eq(['1', '', '333', '4444', '1234'])
+  it 'should parse country code, area code, prefixes, lines and extensions' do
+    return_array = Parse.parse_phone('1-222-333-4444 x1234')
+    expect(return_array).to eq(['1', '222', '333', '4444', '1234'])
   end
 
   it 'should parse area code, prefixes, lines and extensions' do

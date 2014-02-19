@@ -15,13 +15,13 @@ class Parse
   def self.parse_phone(phone_string)
     parsed_phone = { country: '', area: '', pre: '', line: '', ext: '' }
 
-    phone = phone_string.split(/\W/)
-    parsed_phone[:ext] = phone.pop if phone.any? { |ext| ext.include?('x') }
-    parsed_phone[:ext].delete! 'x'
-    parsed_phone[:country] = phone.shift if phone[0].length == 1
-    parsed_phone[:line] = phone.pop
-    parsed_phone[:pre] = phone.pop
-    parsed_phone[:area] = phone.pop if phone.count > 0
+    phone = phone_string.scan(/\d+/)
+    parsed_phone[:country] = phone.shift if phone[0].length < 3
+    parsed_phone[:area] = phone.shift
+    parsed_phone[:pre] = phone.shift
+    parsed_phone[:line] = phone.shift
+    parsed_phone[:ext] = phone.shift if phone.first
+    parsed_phone.values
   end
 
   def self.parse_twitter(twitter_string)
@@ -41,14 +41,3 @@ class Parse
     parsed_email.values
   end
 end
-
-=begin
-phone = phone_string.split(/\W/)  .scan(/(\d+)/) if phone.count < 3
-    parsed_phone[:ext] = phone.pop if phone.any? { |ext| ext.include?('x') }
-    parsed_phone[:ext].delete! 'x'
-    parsed_phone[:country] = phone.shift if phone[0].length == 1
-    parsed_phone[:line] = phone.pop
-    parsed_phone[:pre] = phone.pop
-    parsed_phone[:area] = phone.pop if phone.count > 0
-=end
-
