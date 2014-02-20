@@ -2,26 +2,31 @@
 
 require 'thor'
 require '../lib/analyze.rb'
+require 'pry'
 
 class Txt2csv < Thor
   class_option :i, :banner => " Input file: this must be specified"
-                   #:required => true
   class_option :o, :banner => " Output file: this must be specified"
-                   #:required => true
+  class_option :p, :aliases => ['--name-prefix'],
+               :type => 'boolean',
+               :banner => " Prefix file/selector"
+  class_option :s, :aliases => ['--name-suffix'],
+               :type => 'boolean',
+               :banner => " Suffix file/selector"
 
   desc "analyze {-p | -s} -i File -o File", "analyze a file"
-  # options :name_prefix, :aliases => :p
-  # options :name_suffix, :aliases => :s
+
   def analyze
-   input = options[:i]
-   output = options[:o]
-   fix = '-p'
-   Analyze.new(input, output, fix)
+    binding.pry
+    input = options[:i]
+    output = options[:o]
+    # needs error checking for both fix options
+    fix = '-p' if options[:p]
+    fix = '-s' if options[:s]
+    Analyze.new(input, output, fix)
   end
 
   desc "convert -p File -s File -i File -o File", "convert a file"
-  # options :name_prefix, :aliases => :p
-  # options :name_suffix, :aliases => :s
   def convert
     puts "option i works!" if options[:i]
   end
