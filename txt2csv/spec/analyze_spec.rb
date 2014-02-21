@@ -54,6 +54,7 @@ describe TXT2CSV::Txt2csv do
   end
 
   # clean up after ourselves
+
   after(:all) do
     File.delete 'spec/testfile.txt'
     File.delete 'spec/expected_prefixes.txt'
@@ -65,14 +66,16 @@ describe TXT2CSV::Txt2csv do
     context "when analyze is run from the CLI"
       let(:analyze) { Txt2csv.start(['-p', '-i', '../spec/testfile.txt', '-i', 'histogram.txt']) }
 
-  it "reads a file and prints a hash of prefixes when given the -p option" do
-    `bin/txt2csv analyze -p -i spec/testfile.txt -o spec/histogram.txt`
-    IO.read('spec/histogram.txt').should == IO.read('spec/expected_prefixes.txt')
+      it "reads a file and prints a hash of prefixes when given the -p option" do
+        IO.read('bin/histogram.txt').should == IO.read('spec/expected_prefixes.txt') { analyze }
+      end
+
+      let(:analyze) { Txt2csv.start(['-p', '-i', '../spec/testfile.txt', '-i', 'histogram.txt']) }
+
+      it "reads a file and prints a hash of suffixes when given the -s option" do
+        IO.read('bin/histogram.txt').should == IO.read('spec/expected_suffixes.txt') { analyze }
+      end
+    end
   end
 
-  it "reads a file and prints a hash of suffixes when given the -s option" do
-    `bin/txt2csv analyze -s -i spec/testfile.txt -o spec/histogram.txt`
-    IO.read('spec/histogram.txt').should == IO.read('spec/expected_suffixes.txt')
-  end
 end
-
