@@ -7,15 +7,15 @@ require 'pry'
 class Txt2csv < Thor
   class_option :i, :banner => " Input file: this must be specified"
   class_option :o, :banner => " Output file: this must be specified"
-  class_option :p, :aliases => ['--name-prefix'],
-               :type => 'boolean',
-               :banner => " Prefix file/selector"
-  class_option :s, :aliases => ['--name-suffix'],
-               :type => 'boolean',
-               :banner => " Suffix file/selector"
 
   desc "analyze {-p | -s} -i File -o File", "analyze a file"
+  option  :p, :aliases => ['--name-prefix'],
+               :type => 'boolean',
+               :banner => " Prefix file/selector"
 
+  option :s, :aliases => ['--name-suffix'],
+               :type => 'boolean',
+               :banner => " Suffix file/selector" 
   def analyze
     binding.pry
     input = options[:i]
@@ -27,8 +27,17 @@ class Txt2csv < Thor
   end
 
   desc "convert -p File -s File -i File -o File", "convert a file"
+  option  :p, :aliases => ['--name-prefix'],
+               :banner => " Prefix file/selector"
+
+  option :s, :aliases => ['--name-suffix'],
+               :banner => " Suffix file/selector" 
   def convert
-    puts "option i works!" if options[:i]
+    input = options[:i]
+    output = options[:o]
+    prefix = options[:p]
+    suffix = options[:s]
+    Convert.new(prefix, suffix, input, output)
   end
 
 end
