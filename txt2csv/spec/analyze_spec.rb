@@ -55,23 +55,22 @@ describe "analyze" do
 
   # clean up after ourselves
 
-  after(:all) do
-    File.delete 'spec/testfile.txt'
-    File.delete 'spec/expected_prefixes.txt'
-    File.delete 'spec/expected_suffixes.txt'
-    File.delete 'spec/histogram.txt'
-  end
+  # after(:all) do
+  #   File.delete 'spec/testfile.txt'
+  #   File.delete 'spec/expected_prefixes.txt'
+  #   File.delete 'spec/expected_suffixes.txt'
+  #   File.delete 'spec/histogram.txt'
+  # end
 
   # specify what the options and STDIN and STDOUT are supposed to do
 
   it "reads a file and prints a hash of prefixes when given the -p option" do
-
-    `ruby lib/analyze.rb -p <spec/testfile.txt >spec/histogram.txt`
+    `bin/txt2csv analyze -p -i spec/testfile.txt -o spec/histogram.txt`
     IO.read('spec/histogram.txt').should == IO.read('spec/expected_prefixes.txt')
   end
 
   it "reads a file and prints a hash of suffixes when given the -s option" do
-    `ruby lib/analyze.rb -s <spec/testfile.txt >spec/histogram.txt`
+    `bin/txt2csv analyze -s -i spec/testfile.txt -o spec/histogram.txt`
     IO.read('spec/histogram.txt').should == IO.read('spec/expected_suffixes.txt')
   end
 end

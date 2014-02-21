@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 require 'csv'
-require '../lib/parse.rb'
+require 'lib/parse.rb'
 
 class Convert
   def initialize(input_file_name, prefix_file_name, suffix_file_name, output_file_name)

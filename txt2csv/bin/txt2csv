@@ -1,9 +1,8 @@
 #!/usr/bin/env ruby
 
 require 'thor'
-require '../lib/analyze.rb'
-require '../lib/parse.rb'
-require 'pry'
+require_relative '../lib/analyze.rb'
+require_relative '../lib/parse.rb'
 
 class Txt2csv < Thor
   class_option :i, :banner => " Input file: this must be specified"
@@ -18,7 +17,6 @@ class Txt2csv < Thor
                :type => 'boolean',
                :banner => " Suffix file/selector"
   def analyze
-    binding.pry
     input = options[:i]
     output = options[:o]
     # needs error checking for both fix options
