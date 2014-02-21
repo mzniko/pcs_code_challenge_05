@@ -1,7 +1,0 @@
-Roberts 10
-Smith 6
-Jones 5
-Wesson 4
-Washington 3
-Franklin 2
-Wintermute 1

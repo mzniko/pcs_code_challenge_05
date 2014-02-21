@@ -42,7 +42,7 @@ def create_suffix_expected_file (filename)
   end
 end
 
-describe TXT2CSV::Txt2csv do
+describe "analyze" do
 
   # Set up the files need for the specifications
   # put them down in the spec folder so they don't clutter the project root folder
@@ -59,23 +59,18 @@ describe TXT2CSV::Txt2csv do
     File.delete 'spec/testfile.txt'
     File.delete 'spec/expected_prefixes.txt'
     File.delete 'spec/expected_suffixes.txt'
-    File.delete 'bin/histogram.txt'
+    File.delete 'spec/histogram.txt'
   end
 
-  describe "#analyze" do
-    context "when analyze is run from the CLI"
-      let(:analyze) { Txt2csv.start(['-p', '-i', '../spec/testfile.txt', '-i', 'histogram.txt']) }
+  # specify what the options and STDIN and STDOUT are supposed to do
 
-      it "reads a file and prints a hash of prefixes when given the -p option" do
-        IO.read('bin/histogram.txt').should == IO.read('spec/expected_prefixes.txt') { analyze }
-      end
-
-      let(:analyze) { Txt2csv.start(['-p', '-i', '../spec/testfile.txt', '-i', 'histogram.txt']) }
-
-      it "reads a file and prints a hash of suffixes when given the -s option" do
-        IO.read('bin/histogram.txt').should == IO.read('spec/expected_suffixes.txt') { analyze }
-      end
-    end
+  it "reads a file and prints a hash of prefixes when given the -p option" do
+    `bin/txt2csv analyze -p -i spec/testfile.txt -o spec/histogram.txt`
+    IO.read('spec/histogram.txt').should == IO.read('spec/expected_prefixes.txt')
   end
 
+  it "reads a file and prints a hash of suffixes when given the -s option" do
+    `bin/txt2csv analyze -s -i spec/testfile.txt -o spec/histogram.txt`
+    IO.read('spec/histogram.txt').should == IO.read('spec/expected_suffixes.txt')
+  end
 end
