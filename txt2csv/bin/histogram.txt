@@ -1,7 +1,0 @@
-Dr. 10
-Miss 6
-Mr. 5
-Mrs. 4
-Darleen 3
-Frank 2
-Jane 1

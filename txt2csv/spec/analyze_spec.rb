@@ -42,7 +42,7 @@ def create_suffix_expected_file (filename)
   end
 end
 
-describe "analyze" do
+describe TXT2CSV::Txt2csv do
 
   # Set up the files need for the specifications
   # put them down in the spec folder so they don't clutter the project root folder
@@ -54,15 +54,16 @@ describe "analyze" do
   end
 
   # clean up after ourselves
+  after(:all) do
+    File.delete 'spec/testfile.txt'
+    File.delete 'spec/expected_prefixes.txt'
+    File.delete 'spec/expected_suffixes.txt'
+    File.delete 'bin/histogram.txt'
+  end
 
-  # after(:all) do
-  #   File.delete 'spec/testfile.txt'
-  #   File.delete 'spec/expected_prefixes.txt'
-  #   File.delete 'spec/expected_suffixes.txt'
-  #   File.delete 'spec/histogram.txt'
-  # end
-
-  # specify what the options and STDIN and STDOUT are supposed to do
+  describe "#analyze" do
+    context "when analyze is run from the CLI"
+      let(:analyze) { Txt2csv.start(['-p', '-i', '../spec/testfile.txt', '-i', 'histogram.txt']) }
 
   it "reads a file and prints a hash of prefixes when given the -p option" do
     `bin/txt2csv analyze -p -i spec/testfile.txt -o spec/histogram.txt`
@@ -74,3 +75,4 @@ describe "analyze" do
     IO.read('spec/histogram.txt').should == IO.read('spec/expected_suffixes.txt')
   end
 end
+
