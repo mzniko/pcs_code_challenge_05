@@ -3,7 +3,7 @@ require 'csv'
 
 # This analyzes names to create a histogram of prefixes or suffixes
 class Analyze
-  def initialize(input_file_name, output_file_name, fix)
+  def initialize(fix, input_file_name, output_file_name)
     @input_file = File.new(input_file_name, 'r')
     @output_file = File.new(output_file_name, 'w')
     @fix = fix

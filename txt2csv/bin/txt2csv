@@ -22,7 +22,7 @@ class Txt2csv < Thor
     # needs error checking for both fix options
     fix = '-p' if options[:p]
     fix = '-s' if options[:s]
-    Analyze.new(input, output, fix)
+    Analyze.new(fix, input, output)
   end
 
   desc "convert -p File -s File -i File -o File", "convert a file"
