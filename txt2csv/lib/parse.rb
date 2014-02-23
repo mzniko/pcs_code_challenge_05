@@ -1,3 +1,5 @@
+require 'pry'
+
 # Parses from name, phone, twitter and email strings
 class Parse
   def self.parse_names(prefixes, suffixes, name_string)

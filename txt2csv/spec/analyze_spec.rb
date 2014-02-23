@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'analyze.rb'
+require 'pry'
 
 # First, define methods used to create the test files.
 # We create the test files here
@@ -42,7 +44,7 @@ def create_suffix_expected_file (filename)
   end
 end
 
-describe "analyze" do
+describe "Analyze" do
 
   # Set up the files need for the specifications
   # put them down in the spec folder so they don't clutter the project root folder
@@ -62,15 +64,45 @@ describe "analyze" do
     File.delete 'spec/histogram.txt'
   end
 
-  # specify what the options and STDIN and STDOUT are supposed to do
+  context "#initialization" do
+    let(:analyze) { Analyze.new('spec/testfile.txt', 'spec/histogram.txt', '-p')}
+    it "opens an input file for reading" do
+      expect(analyze.instance_variable_get(:@input_file)).to be_a(File)
+    end
 
-  it "reads a file and prints a hash of prefixes when given the -p option" do
-    `bin/txt2csv analyze -p -i spec/testfile.txt -o spec/histogram.txt`
-    IO.read('spec/histogram.txt').should == IO.read('spec/expected_prefixes.txt')
+    it "opens an output file for writing" do
+      expect(analyze.instance_variable_get(:@output_file)).to be_a(File)
+    end
+
+    it "assigns fix to a variable" do
+      expect(analyze.instance_variable_get(:@fix)).to eq('-p')
+    end
   end
 
-  it "reads a file and prints a hash of suffixes when given the -s option" do
-    `bin/txt2csv analyze -s -i spec/testfile.txt -o spec/histogram.txt`
-    IO.read('spec/histogram.txt').should == IO.read('spec/expected_suffixes.txt')
+  context "#analyze" do
+    it "reads a file and prints a hash of prefixes when given the -p option" do
+      `bin/txt2csv analyze -p -i spec/testfile.txt -o spec/histogram.txt`
+      IO.read('spec/histogram.txt').should == IO.read('spec/expected_prefixes.txt')
+    end
+
+    it "reads a file and prints a hash of suffixes when given the -s option" do
+      `bin/txt2csv analyze -s -i spec/testfile.txt -o spec/histogram.txt`
+      IO.read('spec/histogram.txt').should == IO.read('spec/expected_suffixes.txt')
+    end
+  end
+
+  context "#pick_pattern prefixes" do
+    let(:analyze) { Analyze.new('spec/testfile.txt', 'spec/histogram.txt', '-p')}
+    it "selects the appropriate pattern for prefixes" do
+      expect(analyze.pick_pattern).to eq(/^[\w\.]+/)
+    end
+  end
+
+  context "#pick_pattern suffixes" do
+    let(:analyze) { Analyze.new('spec/testfile.txt', 'spec/histogram.txt', '-s')}
+    it "selects the appropriate pattern for suffixes" do
+      expect(analyze.pick_pattern).to  eq(/[\w]+$/)
+    end
+
   end
 end

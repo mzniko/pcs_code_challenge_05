@@ -12,7 +12,6 @@ class Txt2csv < Thor
   option  :p, :aliases => ['--name-prefix'],
                :type => 'boolean',
                :banner => " Prefix file/selector"
-
   option :s, :aliases => ['--name-suffix'],
                :type => 'boolean',
                :banner => " Suffix file/selector"
@@ -28,7 +27,6 @@ class Txt2csv < Thor
   desc "convert -p File -s File -i File -o File", "convert a file"
   option  :p, :aliases => ['--name-prefix'],
                :banner => " Prefix file/selector"
-
   option :s, :aliases => ['--name-suffix'],
                :banner => " Suffix file/selector"
   def convert
