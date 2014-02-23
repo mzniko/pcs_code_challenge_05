@@ -38,11 +38,11 @@ def create_suffix_file (filename)
 end
 
 describe "Convert" do
-  let!(:convert) { Convert.new('spec/prefixes.txt', 'spec/suffixes.txt', 'spec/testfile.txt', 'spec/clean_csv.txt')}
+  let(:convert) { Convert.new('spec/prefixes.txt', 'spec/suffixes.txt', 'spec/convert_testfile.txt', 'spec/clean_csv.txt')}
 
   before(:all) do
     create_expected_clean_csv_file 'spec/expected_clean_csv.txt'
-    create_testfile 'spec/testfile.txt'
+    create_testfile 'spec/convert_testfile.txt'
     create_prefix_file 'spec/prefixes.txt'
     create_suffix_file 'spec/suffixes.txt'
   end
@@ -52,7 +52,7 @@ describe "Convert" do
     File.delete 'spec/suffixes.txt'
     File.delete 'spec/clean_csv.txt'
     File.delete 'spec/expected_clean_csv.txt'
-    File.delete 'spec/testfile.txt'
+    File.delete 'spec/convert_testfile.txt'
   end
 
   context "#initialization" do
@@ -87,7 +87,8 @@ describe "Convert" do
 
   context "#send_to_parser" do
     it "should create a correct clean csv file from a tab-delimited file" do
-      expect(IO.read('spec/clean_csv.txt')).to eq("Mr. Marko Nikolovski I 555 123 1234 mzniko mz.nikolovski@gmail.com\nDr. Jeff Stringer III 555 833 5486 jeffstringer jeff.j.stringer@gmail.com\n")
+      `bin/txt2csv convert -p spec/prefixes.txt -s spec/suffixes.txt -i spec/convert_testfile.txt -o spec/clean_csv.txt`
+      expect(IO.read('spec/clean_csv.txt')).to eq(IO.read('spec/expected_clean_csv.txt'))
     end
   end
 

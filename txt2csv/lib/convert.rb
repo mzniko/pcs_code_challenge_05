@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 require 'csv'
-require 'parse.rb'
+require_relative 'parse.rb'
 require 'pry'
 
 class Convert

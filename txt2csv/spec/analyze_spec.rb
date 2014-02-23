@@ -50,7 +50,7 @@ describe "Analyze" do
   # put them down in the spec folder so they don't clutter the project root folder
 
   before(:all) do
-    create_test_file 'spec/testfile.txt'
+    create_test_file 'spec/analyze_testfile.txt'
     create_prefix_expected_file 'spec/expected_prefixes.txt'
     create_suffix_expected_file 'spec/expected_suffixes.txt'
   end
@@ -58,14 +58,14 @@ describe "Analyze" do
   # clean up after ourselves
 
   after(:all) do
-    File.delete 'spec/testfile.txt'
+    File.delete 'spec/analyze_testfile.txt'
     File.delete 'spec/expected_prefixes.txt'
     File.delete 'spec/expected_suffixes.txt'
     File.delete 'spec/histogram.txt'
   end
 
   context "#initialization" do
-    let(:analyze) { Analyze.new('spec/testfile.txt', 'spec/histogram.txt', '-p')}
+    let(:analyze) { Analyze.new('spec/analyze_testfile.txt', 'spec/histogram.txt', '-p')}
     it "opens an input file for reading" do
       expect(analyze.instance_variable_get(:@input_file)).to be_a(File)
     end
@@ -81,25 +81,25 @@ describe "Analyze" do
 
   context "#analyze" do
     it "reads a file and prints a hash of prefixes when given the -p option" do
-      `bin/txt2csv analyze -p -i spec/testfile.txt -o spec/histogram.txt`
+      `bin/txt2csv analyze -p -i spec/analyze_testfile.txt -o spec/histogram.txt`
       IO.read('spec/histogram.txt').should == IO.read('spec/expected_prefixes.txt')
     end
 
     it "reads a file and prints a hash of suffixes when given the -s option" do
-      `bin/txt2csv analyze -s -i spec/testfile.txt -o spec/histogram.txt`
+      `bin/txt2csv analyze -s -i spec/analyze_testfile.txt -o spec/histogram.txt`
       IO.read('spec/histogram.txt').should == IO.read('spec/expected_suffixes.txt')
     end
   end
 
   context "#pick_pattern prefixes" do
-    let(:analyze) { Analyze.new('spec/testfile.txt', 'spec/histogram.txt', '-p')}
+    let(:analyze) { Analyze.new('spec/analyze_testfile.txt', 'spec/histogram.txt', '-p')}
     it "selects the appropriate pattern for prefixes" do
       expect(analyze.pick_pattern).to eq(/^[\w\.]+/)
     end
   end
 
   context "#pick_pattern suffixes" do
-    let(:analyze) { Analyze.new('spec/testfile.txt', 'spec/histogram.txt', '-s')}
+    let(:analyze) { Analyze.new('spec/analyze_testfile.txt', 'spec/histogram.txt', '-s')}
     it "selects the appropriate pattern for suffixes" do
       expect(analyze.pick_pattern).to  eq(/[\w]+$/)
     end

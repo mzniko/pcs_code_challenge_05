@@ -3,6 +3,7 @@
 require 'thor'
 require_relative '../lib/analyze.rb'
 require_relative '../lib/parse.rb'
+require_relative '../lib/convert.rb'
 
 class Txt2csv < Thor
   class_option :i, :banner => " Input file: this must be specified"
