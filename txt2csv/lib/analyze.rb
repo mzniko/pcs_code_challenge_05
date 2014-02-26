@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 require 'csv'
+require 'pry'
 
 # This analyzes names to create a histogram of prefixes or suffixes
 class Analyze
@@ -15,7 +16,7 @@ class Analyze
     pattern = pick_pattern
 
     @input_file.each_line do |line|
-      line_array = CSV.parse_line(line, col_sep: '\t')
+      line_array = line.split("\t")
       hash_data = regex(pattern, line_array[0])
       histogram[hash_data.to_sym] += 1
     end
@@ -29,7 +30,7 @@ class Analyze
     when '-p'
       pattern = /^[\w\.]+/
     when '-s'
-      pattern = /[\w]+$/
+      pattern = /[\w]+[\.]?$/
     end
     pattern
   end

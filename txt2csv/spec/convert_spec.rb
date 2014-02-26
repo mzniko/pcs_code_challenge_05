@@ -4,8 +4,7 @@ require 'pry'
 
 def create_expected_clean_csv_file(filename)
   File.open(filename, "w") do |f|
-    f.puts "Mr. Marko Nikolovski I 555 123 1234 mzniko mz.nikolovski@gmail.com"
-    f.puts "Dr. Jeff Stringer III 555 833 5486 jeffstringer jeff.j.stringer@gmail.com"
+    f.puts "Prefix,First,Middle,Last,Suffix,Country,Area,Phone-Prefix,Line,Extension,Handle,Address\n\nMr.,Marko,\"\",Nikolovski,I,\"\",555,123,1234,\"\",mzniko,\"mz.nikolovski@gmail.com\n\"\nDr.,Jeff,\"\",Stringer,III,\"\",555,833,5486,\"\",jeffstringer,\"jeff.j.stringer@gmail.com\n\"\n"
   end
 end
 
@@ -38,7 +37,8 @@ def create_suffix_file (filename)
 end
 
 describe "Convert" do
-  let(:convert) { Convert.new('spec/prefixes.txt', 'spec/suffixes.txt', 'spec/convert_testfile.txt', 'spec/clean_csv.txt')}
+  let(:convert) { Convert.new('spec/prefixes.txt', 'spec/suffixes.txt',
+                              'spec/convert_testfile.txt', 'spec/clean_csv.txt')}
 
   before(:all) do
     create_expected_clean_csv_file 'spec/expected_clean_csv.txt'
@@ -47,22 +47,18 @@ describe "Convert" do
     create_suffix_file 'spec/suffixes.txt'
   end
 
-  after(:all) do
-    File.delete 'spec/prefixes.txt'
-    File.delete 'spec/suffixes.txt'
-    File.delete 'spec/clean_csv.txt'
-    File.delete 'spec/expected_clean_csv.txt'
-    File.delete 'spec/convert_testfile.txt'
-  end
+  # after(:all) do
+  #   File.delete 'spec/prefixes.txt'
+  #   File.delete 'spec/suffixes.txt'
+  #   File.delete 'spec/clean_csv.txt'
+  #   File.delete 'spec/expected_clean_csv.txt'
+  #   File.delete 'spec/convert_testfile.txt'
+  # end
 
   context "#initialization" do
 
     it "opens an input file for reading" do
       expect(convert.instance_variable_get(:@input_file)).to be_a(File)
-    end
-
-    it "opens an output file for writing" do
-      expect(convert.instance_variable_get(:@output_file)).to be_a(File)
     end
 
     it "opens a prefix file for reading" do

@@ -9,38 +9,38 @@ require 'pry'
 
 def create_test_file (filename)
   File.open(filename, "w") do |f|
-    5.times  {f.puts "Mr. Jones"}
-    6.times  {f.puts "Miss Smith"}
-    4.times  {f.puts "Mrs. Wesson"}
-    10.times {f.puts "Dr. Roberts"}
-    1.times  {f.puts "Jane Wintermute"}
-    2.times  {f.puts "Frank Franklin"}
-    3.times  {f.puts "Darleen Washington"}
+    5.times  {f.puts "Mrs. Theresa E. Stamm\t1-678-523-6736\tReinger\tkieran@runte.biz"}
+    6.times  {f.puts "Keara Maggio\t1-399-471-4388 x9581\t@Weber\tcayla@lubowitz.com"}
+    4.times  {f.puts "Daren S. Padberg DVM\t240-399-5583\tx73790 Hessel\taugusta@stoltenberg.com"}
+    10.times {f.puts "Mr. Claud Auer\t(561)024-9548 x165\t@Mraz\tjettie_friesen@weber.com"}
+    1.times  {f.puts "Miss Sam Parisian\t818-657-9309 x5633\t@Quigley\tlavon.quitzon@schinnercain.biz"}
+    2.times  {f.puts "Ciara X. Windler II\t575-225-1469 x240\tLabadie\tryan_moore@hagenesmiller.com"}
+    3.times  {f.puts "Davion G. Streich\t333-783-4674 x18711\tSchneider\tole.bashirian@murazikmonahan.org"}
  end
 end
 
-def create_prefix_expected_file (filename)
+def create_prefix_expected_file(filename)
   # Note sort order - by count, not by word
   File.open(filename, "w") do |f|
-    f.puts "Dr. 10"
-    f.puts "Miss 6"
-    f.puts "Mr. 5"
-    f.puts "Mrs. 4"
-    f.puts "Darleen 3"
-    f.puts "Frank 2"
-    f.puts "Jane 1"
+    f.puts "Mr. 10"
+    f.puts "Keara 6"
+    f.puts "Mrs. 5"
+    f.puts "Daren 4"
+    f.puts "Davion 3"
+    f.puts "Ciara 2"
+    f.puts "Miss 1"
   end
 end
 
-def create_suffix_expected_file (filename)
+def create_suffix_expected_file(filename)
   File.open(filename, "w") do |f|
-    f.puts "Roberts 10"
-    f.puts "Smith 6"
-    f.puts "Jones 5"
-    f.puts "Wesson 4"
-    f.puts "Washington 3"
-    f.puts "Franklin 2"
-    f.puts "Wintermute 1"
+    f.puts "Auer 10"
+    f.puts "Maggio 6"
+    f.puts "Stamm 5"
+    f.puts "DVM 4"
+    f.puts "Streich 3"
+    f.puts "II 2"
+    f.puts "Parisian 1"
   end
 end
 
@@ -65,7 +65,7 @@ describe "Analyze" do
   end
 
   context "#initialization" do
-    let(:analyze) { Analyze.new('spec/analyze_testfile.txt', 'spec/histogram.txt', '-p')}
+    let(:analyze) { Analyze.new('-p', 'spec/analyze_testfile.txt', 'spec/histogram.txt')}
     it "opens an input file for reading" do
       expect(analyze.instance_variable_get(:@input_file)).to be_a(File)
     end
@@ -92,16 +92,16 @@ describe "Analyze" do
   end
 
   context "#pick_pattern prefixes" do
-    let(:analyze) { Analyze.new('spec/analyze_testfile.txt', 'spec/histogram.txt', '-p')}
+    let(:analyze) { Analyze.new('-p', 'spec/analyze_testfile.txt', 'spec/histogram.txt')}
     it "selects the appropriate pattern for prefixes" do
       expect(analyze.pick_pattern).to eq(/^[\w\.]+/)
     end
   end
 
   context "#pick_pattern suffixes" do
-    let(:analyze) { Analyze.new('spec/analyze_testfile.txt', 'spec/histogram.txt', '-s')}
+    let(:analyze) { Analyze.new('-s', 'spec/analyze_testfile.txt', 'spec/histogram.txt')}
     it "selects the appropriate pattern for suffixes" do
-      expect(analyze.pick_pattern).to  eq(/[\w]+$/)
+      expect(analyze.pick_pattern).to  eq(/[\w]+[\.]?$/)
     end
 
   end
