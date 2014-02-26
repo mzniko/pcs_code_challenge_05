@@ -15,7 +15,6 @@ def create_testfile(filename)
   end
 end
 
-
 def create_prefix_file (filename)
   # Note sort order - by count, not by word
   File.open(filename, "w") do |f|
@@ -47,13 +46,13 @@ describe "Convert" do
     create_suffix_file 'spec/suffixes.txt'
   end
 
-  # after(:all) do
-  #   File.delete 'spec/prefixes.txt'
-  #   File.delete 'spec/suffixes.txt'
-  #   File.delete 'spec/clean_csv.txt'
-  #   File.delete 'spec/expected_clean_csv.txt'
-  #   File.delete 'spec/convert_testfile.txt'
-  # end
+  after(:all) do
+    File.delete 'spec/prefixes.txt'
+    File.delete 'spec/suffixes.txt'
+    File.delete 'spec/clean_csv.txt'
+    File.delete 'spec/expected_clean_csv.txt'
+    File.delete 'spec/convert_testfile.txt'
+  end
 
   context "#initialization" do
 

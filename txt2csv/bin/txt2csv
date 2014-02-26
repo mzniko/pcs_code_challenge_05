@@ -37,7 +37,6 @@ class Txt2csv < Thor
     suffix = options[:s]
     Convert.new(prefix, suffix, input, output)
   end
-
 end
 
 Txt2csv.start
